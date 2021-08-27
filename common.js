@@ -13,7 +13,7 @@ fs.mkdirSync(benchmarkOutdir, { recursive: true })
 fs.closeSync(fs.openSync(bashrc, 'w'))
 
 function _exec (cmd) {
-  return exec('bash', ['-l', '-c', `source ${bashrc}; ${cmd}`])
+  return exec.exec('bash', ['-l', '-c', `source ${bashrc}; ${cmd}`])
 }
 
 let meta = `benchmarks/${benchmarkName}/meta.yaml`
