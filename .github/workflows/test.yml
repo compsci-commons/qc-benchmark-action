@@ -29,12 +29,14 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - uses: ./
+      - name: Download benchmark
+        uses: ./
         with:
           task: download
           benchmark-name: dummy
       
-      - uses: ./
+      - name: Eval benchmark
+        uses: ./
         id: eval
         with:
           task: eval
