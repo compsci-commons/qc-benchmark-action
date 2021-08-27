@@ -8,12 +8,13 @@ const benchmarkName = core.getInput('benchmark-name')
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 const bashrc = `${benchmarkOutdir}/.bashrc`
 const micromamba = `${benchmarkOutdir}/bin/micromamba`
+const mambaRootPrefix = `${benchmarkOutdir}/tmp/micromamba`
 
 fs.mkdirSync(benchmarkOutdir, { recursive: true })
 fs.closeSync(fs.openSync(bashrc, 'w'))
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `source ${bashrc}; ${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `source ${bashrc}; MAMBA_ROOT_PREFIX=${mambaRootPrefix} ${cmd}`])
 }
 
 let meta = `benchmarks/${benchmarkName}/meta.yaml`
@@ -25,7 +26,7 @@ const common = {
   },
   initMicromamba: async function () {
     await _exec(`curl -L https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj -C ${benchmarkOutdir} bin/micromamba`)
-    await _exec(`${micromamba} shell hook -s bash -p ${benchmarkOutdir}/tmp/micromamba > ${bashrc}`)
+    await _exec(`${micromamba} shell hook -s bash -p ${mambaRootPrefix} > ${bashrc}`)
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
@@ -36,7 +37,7 @@ const common = {
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
       await _exec('echo $MAMBA_ROOT_PREFIX')
-      await _exec(`${micromamba} create --root-prefix ${benchmarkOutdir}/tmp/micromamba -n ${name} -f ${envpath}`)
+      await _exec(`${micromamba} create -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
