@@ -11,7 +11,9 @@ const micromamba = `${benchmarkOutdir}/bin/micromamba`
 const mambaRootPrefix = `${benchmarkOutdir}/tmp/micromamba`
 
 fs.mkdirSync(benchmarkOutdir, { recursive: true })
-fs.closeSync(fs.openSync(bashrc, 'w'))
+if (!fs.existsSync(bashrc)) {
+  fs.closeSync(fs.openSync(bashrc, 'w'))
+}
 
 async function _exec (cmd) {
   await exec.exec('bash', ['-l', '-c', `export MAMBA_ROOT_PREFIX=${mambaRootPrefix}; export MAMBA_EXE=${micromamba}; source ${bashrc}; ${cmd}`])
