@@ -1,4 +1,4 @@
 channels:
   - conda-forge
-depencencies:
+dependencies:
   - curl =7
