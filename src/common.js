@@ -12,8 +12,8 @@ const micromamba = `${benchmarkOutdir}/bin/micromamba`
 fs.mkdirSync(benchmarkOutdir, { recursive: true })
 fs.closeSync(fs.openSync(bashrc, 'w'))
 
-function _exec (cmd) {
-  return exec.exec('bash', ['-l', '-c', `source ${bashrc}; ${cmd}`])
+async function _exec (cmd) {
+  await exec.exec('bash', ['-l', '-c', `source ${bashrc}; ${cmd}`])
 }
 
 let meta = `benchmarks/${benchmarkName}/meta.yaml`
