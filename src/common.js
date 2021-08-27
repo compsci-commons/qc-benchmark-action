@@ -54,7 +54,7 @@ const common = {
     return Object.entries(meta.paths).map(function ([key, path]) { return `${key}="${benchmarkOutdir}/${path}"` }).join(' ')
   },
   getOutpath: function (name) {
-    return meta.paths[name]
+    return `${benchmarkOutdir}/${meta.paths[name]}`
   }
 }
 
