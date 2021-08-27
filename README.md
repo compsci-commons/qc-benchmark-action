@@ -1,5 +1,5 @@
 # qc-benchmark-action
-A generic github action for conducting benchmarks
+A generic github action for conducting scientific QC benchmarks.
 
 
 ## Benchmarks
