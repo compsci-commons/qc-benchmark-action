@@ -17,7 +17,7 @@ function _exec(cmd) {
 }
 
 var meta = `benchmarks/${benchmarkName}/meta.yaml`;
-meta = yaml.safeLoad(fs.readFileSync(meta, 'utf-8'));
+meta = yaml.load(fs.readFileSync(meta, 'utf-8'));
 
 var common = {
     exec: function (cmd) {
