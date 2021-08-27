@@ -20,19 +20,23 @@ let meta = `benchmarks/${benchmarkName}/meta.yaml`
 meta = yaml.load(fs.readFileSync(meta, 'utf-8'))
 
 const common = {
-  exec: function (cmd) {
-    return _exec(cmd)
+  exec: async function (cmd) {
+    await _exec(cmd)
   },
-  initMicromamba: function () {
-    _exec(`curl -L https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj ${micromamba}`)
-    _exec(`${micromamba} shell init -s bash -p ${benchmarkOutdir}/tmp/micromamba --rc-file ${bashrc}`)
+  initMicromamba: async function () {
+    await _exec(`curl -L https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj ${micromamba}`)
+    await _exec(`${micromamba} shell init -s bash -p ${benchmarkOutdir}/tmp/micromamba --rc-file ${bashrc}`)
   },
-  initEnv: function (envpath, name) {
+  getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      _exec(`${micromamba} create -n ${name} -f ${envpath}`)
       return `micromamba activate ${name}`
     }
     return ''
+  },
+  initEnv: async function (envpath, name) {
+    if (fs.existsSync(envpath)) {
+      await _exec(`${micromamba} create -n ${name} -f ${envpath}`)
+    }
   },
   getBenchmarkName: function () {
     return benchmarkName

@@ -5,9 +5,9 @@ const doEval = require('./eval.js')
 try {
   const task = core.getInput('task')
   if (task === 'download') {
-    doInit()
+    doInit().catch(error => core.setFailed(error.message))
   } else if (task === 'eval') {
-    doEval()
+    doEval().catch(error => core.setFailed(error.message))
   } else {
     core.setFailed(`Invalid task ${task}`)
   }

@@ -1,14 +1,17 @@
 const common = require('./common.js')
 
-function doInit () {
+async function doInit () {
   const benchmarkName = common.getBenchmarkName()
   console.log(`Download data for ${benchmarkName}.`)
 
-  const prefix = common.initEnv(common.getBenchmarkFile('download-env.yaml'), 'download-env')
+  const envpath = common.getBenchmarkFile('download-env.yaml')
+  const envname = 'download-env'
+  const prefix = common.getEnvActivate(envpath, envname)
+  await common.initEnv(envpath, envname)
 
-  common.initMicromamba()
+  await common.initMicromamba()
 
-  common.exec(`${prefix}; ${common.getOutpathEnvvars()} bash ${common.getBenchmarkFile('download.sh')}`)
+  await common.exec(`${prefix}; ${common.getOutpathEnvvars()} bash ${common.getBenchmarkFile('download.sh')}`)
 }
 
 module.exports = doInit
