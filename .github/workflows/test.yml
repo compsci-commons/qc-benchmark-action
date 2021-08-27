@@ -46,4 +46,4 @@ jobs:
       - env:
           REPORT: ${{ steps.eval.outputs.report }}
         run: |
-          echo $REPORT
+          cat $REPORT
