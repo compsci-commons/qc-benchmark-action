@@ -41,5 +41,7 @@ jobs:
           benchmark-name: dummy
           results-path: bar.txt
       
-      - run: |
-          echo ${{ steps.eval.outputs.report }}
+      - env:
+          REPORT: ${{ steps.eval.outputs.report }}
+        run: |
+          echo $REPORT
