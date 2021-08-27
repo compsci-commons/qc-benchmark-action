@@ -1,1 +1,1 @@
-echo test eval
+echo test > $report
