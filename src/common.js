@@ -35,7 +35,7 @@ const common = {
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`${micromamba} create -n ${name} -f ${envpath}`)
+      await _exec(`${micromamba} create --root-prefix ${benchmarkOutdir}/tmp/micromamba -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
