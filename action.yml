@@ -9,5 +9,6 @@ inputs:
     required: true
 runs:
   using: node12
+  pre: init-micromamba.js
   main: download.js
   post: eval.js
