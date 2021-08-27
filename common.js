@@ -19,33 +19,33 @@ var meta = `benchmarks/${benchmarkName}/meta.yaml`;
 meta = yaml.safeLoad(fs.readFileSync(meta, 'utf-8'));
 
 var common = {
-    exec: function(cmd) {
+    exec: function (cmd) {
         return _exec(cmd);
     },
-    initMicromamba: function() {
+    initMicromamba: function () {
         _exec(`curl -L https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj ${micromamba}`);
         _exec(`${micromamba} shell init -s bash -p ${benchmarkOutdir}/tmp/micromamba --rc-file ${bashrc}`);
     },
-    initEnv: function(envpath, name) {
-        if(fs.existsSync(envpath)) {
+    initEnv: function (envpath, name) {
+        if (fs.existsSync(envpath)) {
             _exec(`${micromamba} create -n ${name} -f ${envpath}`);
             return `micromamba activate ${name}`;
         }
         return '';
     },
-    getBenchmarkName: function() {
+    getBenchmarkName: function () {
         return benchmarkName;
     },
-    getBenchmarkFile: function(filename) {
+    getBenchmarkFile: function (filename) {
         return `benchmarks/${benchmarkName}/${filename}`;
     },
-    getBenchmarkOutdir: function() {
+    getBenchmarkOutdir: function () {
         return benchmarkOutdir;
     },
-    getOutpathEnvvars: function() {
-        return Object.entries(meta.variables).map(function([key, path]) { `${key}="${benchmarkOutdir}/${path}"` }).join(' ');
+    getOutpathEnvvars: function () {
+        return Object.entries(meta.variables).map(function ([key, path]) { `${key}="${benchmarkOutdir}/${path}"` }).join(' ');
     },
-    getOutpath: function(name) {
+    getOutpath: function (name) {
         return meta.variables[name];
     }
 }

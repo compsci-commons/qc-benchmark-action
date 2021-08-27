@@ -4,7 +4,7 @@ const common = require('./common.js');
 try {
     const benchmarkName = common.getBenchmarkName();
     console.log(`Evaluate results with ${benchmarkName}.`);
-    
+
     let prefix = common.initEnv(getBenchmarkFile('eval-env.yaml'), 'eval-env');
 
     let result = core.getInput('result');
