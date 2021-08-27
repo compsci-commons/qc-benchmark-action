@@ -14,7 +14,7 @@ fs.mkdirSync(benchmarkOutdir, { recursive: true })
 fs.closeSync(fs.openSync(bashrc, 'w'))
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `source ${bashrc}; MAMBA_ROOT_PREFIX=${mambaRootPrefix} MAMBA_EXE=${micromamba} ${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `MAMBA_ROOT_PREFIX=${mambaRootPrefix} MAMBA_EXE=${micromamba} source ${bashrc}; ${cmd}`])
 }
 
 let meta = `benchmarks/${benchmarkName}/meta.yaml`
@@ -30,7 +30,7 @@ const common = {
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      return `${micromamba} activate ${name}`
+      return `micromamba activate ${name}`
     }
     return ''
   },
