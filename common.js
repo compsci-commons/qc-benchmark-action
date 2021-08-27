@@ -9,6 +9,7 @@ var benchmarkOutdir = `benchmark-data/${benchmarkName}`;
 var bashrc = `${benchmarkOutdir}/.bashrc`;
 var micromamba = `${benchmarkOutdir}/bin/micromamba`;
 
+fs.mkdirSync(benchmarkOutdir, {recursive: true});
 fs.closeSync(fs.openSync(bashrc, 'w'))
 
 function _exec(cmd) {
