@@ -30,4 +30,4 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Test action with dummy benchmark
-        uses: .
+        uses: ./
