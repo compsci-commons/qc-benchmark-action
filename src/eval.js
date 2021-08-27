@@ -10,9 +10,9 @@ async function doEval () {
   const prefix = common.getEnvActivate(envpath, envname)
   await common.initEnv(envpath, envname)
 
-  const result = core.getInput('result')
+  const result = core.getInput('results-path')
 
-  await common.exec(`${prefix}; ${common.getOutpathEnvvars()} result="${result}" bash ${common.getBenchmarkFile('eval.sh')}`)
+  await common.exec(`${prefix}; ${common.getOutpathEnvvars()} results="${result}" bash ${common.getBenchmarkFile('eval.sh')}`)
 
   core.setOutput('report', common.getOutpath('report'))
 }

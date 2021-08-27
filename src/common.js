@@ -49,7 +49,6 @@ const common = {
     return benchmarkOutdir
   },
   getOutpathEnvvars: function () {
-    console.log(meta.variables)
     return Object.entries(meta.paths).map(function ([key, path]) { return `${key}="${benchmarkOutdir}/${path}"` }).join(' ')
   },
   getOutpath: function (name) {
