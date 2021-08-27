@@ -25,7 +25,7 @@ const common = {
   },
   initMicromamba: async function () {
     await _exec(`curl -L https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj -C ${benchmarkOutdir} bin/micromamba`)
-    await _exec(`${micromamba} shell init -s bash -p ${benchmarkOutdir}/tmp/micromamba --rc-file ${bashrc}`)
+    await _exec(`${micromamba} shell -s bash --rc-file ${bashrc} init ${benchmarkOutdir}/tmp/micromamba`)
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
