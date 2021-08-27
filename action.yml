@@ -2,13 +2,16 @@ name: 'QC benchmark action'
 description: 'Perform a scientific QC benchmark consisting of data download and result evaluation'
 inputs:
   task: 
-    description: Task to perform. Either 'download' or 'eval'.
+    description: task to perform; either 'download' or 'eval'
     required: true
   benchmark-name:
-    description: Name of the benchmark to conduct
+    description: name of the benchmark to conduct
     required: true
   results-path:
-    description: Path to results that shall be benchmarked
+    description: path to results that shall be benchmarked
+outputs:
+  report:
+    description: path to report of evaluation results (a directory or a file, depending on the benchmark)
 runs:
   using: node12
   main: src/main.js
