@@ -30,7 +30,7 @@ const common = {
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      return `micromamba activate ${name}`
+      return `${micromamba} activate ${name}`
     }
     return ''
   },
