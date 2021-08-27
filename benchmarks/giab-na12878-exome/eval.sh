@@ -1,0 +1,1 @@
+hap.py $truth $result -f $confident -o $report -r $reference

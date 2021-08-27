@@ -1,0 +1,7 @@
+paths:
+  read1: 1.fastq
+  read2: 2.fastq
+  truth: truth.vcf
+  confident: confident.bed
+  reference: reference.fa
+  report: report  # mandatory, reported as an output of the action
