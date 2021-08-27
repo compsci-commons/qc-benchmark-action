@@ -1,6 +1,6 @@
 paths:
-  read1: 1.fastq
-  read2: 2.fastq
+  read1: reads.1.fq
+  read2: reads.2.fq
   truth: truth.vcf
   confident: confident.bed
   reference: reference.fa

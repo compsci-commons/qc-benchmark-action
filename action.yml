@@ -12,6 +12,8 @@ inputs:
 outputs:
   report:
     description: path to report of evaluation results (a directory or a file, depending on the benchmark)
+  data:
+    description: path to benchmark data
 runs:
   using: node12
   main: src/main.js
