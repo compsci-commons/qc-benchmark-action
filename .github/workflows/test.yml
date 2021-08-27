@@ -29,8 +29,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - name: Test action with dummy benchmark
-        uses: ./
+      - uses: ./
         with:
+          task: download
+          benchmark-name: dummy
+      
+      - uses: ./
+        with:
+          task: eval
           benchmark-name: dummy
           results-path: foo.txt

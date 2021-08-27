@@ -1,7 +1,6 @@
-const core = require('@actions/core')
 const common = require('./common.js')
 
-try {
+function doInit () {
   const benchmarkName = common.getBenchmarkName()
   console.log(`Download data for ${benchmarkName}.`)
 
@@ -10,6 +9,6 @@ try {
   common.initMicromamba()
 
   common.exec(`${prefix}; ${common.getOutpathEnvvars()} bash ${common.getBenchmarkFile('download.sh')}`)
-} catch (error) {
-  core.setFailed(error.message)
 }
+
+module.exports = doInit

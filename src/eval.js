@@ -1,7 +1,7 @@
 const core = require('@actions/core')
 const common = require('./common.js')
 
-try {
+function doEval () {
   const benchmarkName = common.getBenchmarkName()
   console.log(`Evaluate results with ${benchmarkName}.`)
 
@@ -12,6 +12,6 @@ try {
   common.exec(`${prefix}; ${common.getOutpathEnvvars()} result="${result}" bash ${common.getBenchmarkFile('eval.sh')}`)
 
   core.setOutput('report', common.getOutpath('report'))
-} catch (error) {
-  core.setFailed(error.message)
 }
+
+module.exports = doEval
