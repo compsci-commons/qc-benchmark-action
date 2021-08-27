@@ -1,0 +1,4 @@
+channels:
+  - conda-forge
+depencencies:
+  - curl =7
