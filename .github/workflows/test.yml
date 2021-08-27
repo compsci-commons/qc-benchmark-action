@@ -35,7 +35,11 @@ jobs:
           benchmark-name: dummy
       
       - uses: ./
+        id: eval
         with:
           task: eval
           benchmark-name: dummy
-          results-path: foo.txt
+          results-path: bar.txt
+      
+      - run: |
+          echo ${{ steps.eval.outputs.report }}
