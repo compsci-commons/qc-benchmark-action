@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Download benchmark
         id: benchmark_download
-        uses: compsci-common/qc-benchmark-action@main
+        uses: compsci-commons/qc-benchmark-action@main
         with:
           task: download
           benchmark-name: giab-na12878-exome
@@ -41,7 +41,7 @@ jobs:
           snakemake --cores 1 ... 
 
       - name: Eval benchmark
-        uses: ./
+        uses: compsci-commons/qc-benchmark-action@main
         id: benchmark_eval
         with:
           task: eval
