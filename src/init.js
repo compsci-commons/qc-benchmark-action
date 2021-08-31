@@ -15,6 +15,7 @@ async function doInit () {
   await common.exec(`${prefix}; ${common.getOutpathEnvvars()} bash ${common.getBenchmarkFile('download.sh')}`)
 
   core.setOutput('data', common.getBenchmarkOutdir())
+  console.log(`Storing output files in ${common.getBenchmarkOutdir()}`)
 }
 
 module.exports = doInit
