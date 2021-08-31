@@ -2,6 +2,7 @@ const core = require('@actions/core')
 const exec = require('@actions/exec')
 const yaml = require('js-yaml')
 const fs = require('fs')
+const path = require('path')
 
 const benchmarkName = core.getInput('benchmark-name')
 
@@ -19,7 +20,7 @@ async function _exec (cmd) {
   await exec.exec('bash', ['-l', '-c', `export MAMBA_ROOT_PREFIX=${mambaRootPrefix}; export MAMBA_EXE=${micromamba}; source ${bashrc}; ${cmd}`])
 }
 
-let meta = `${__dirname}/../benchmarks/${benchmarkName}/meta.yaml`
+let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
 meta = yaml.load(fs.readFileSync(meta, 'utf-8'))
 
 const common = {
@@ -45,7 +46,7 @@ const common = {
     return benchmarkName
   },
   getBenchmarkFile: function (filename) {
-    return `${__dirname}/../benchmarks/${benchmarkName}/${filename}`
+    return path.join(__dirname, `../benchmarks/${benchmarkName}/${filename}`)
   },
   getBenchmarkOutdir: function () {
     return benchmarkOutdir
