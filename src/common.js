@@ -19,7 +19,7 @@ async function _exec (cmd) {
   await exec.exec('bash', ['-l', '-c', `export MAMBA_ROOT_PREFIX=${mambaRootPrefix}; export MAMBA_EXE=${micromamba}; source ${bashrc}; ${cmd}`])
 }
 
-let meta = `benchmarks/${benchmarkName}/meta.yaml`
+let meta = `${__dirname}/../benchmarks/${benchmarkName}/meta.yaml`
 meta = yaml.load(fs.readFileSync(meta, 'utf-8'))
 
 const common = {
@@ -45,7 +45,7 @@ const common = {
     return benchmarkName
   },
   getBenchmarkFile: function (filename) {
-    return `benchmarks/${benchmarkName}/${filename}`
+    return `${__dirname}/../benchmarks/${benchmarkName}/${filename}`
   },
   getBenchmarkOutdir: function () {
     return benchmarkOutdir
