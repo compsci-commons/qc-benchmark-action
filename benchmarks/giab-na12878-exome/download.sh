@@ -5,6 +5,7 @@ IFS=$'\n\t'
 samtools view -u \
     ftp://ftp-trace.ncbi.nih.gov/ReferenceSamples/giab/data/NA12878/Nebraska_NA12878_HG001_TruSeq_Exome/NIST-hg001-7001-ready.bam \
     21 | \
+samtools sort -n -u | \
 samtools fastq -1 $read1 -2 $read2 -0 /dev/null -
 
 # download truth
