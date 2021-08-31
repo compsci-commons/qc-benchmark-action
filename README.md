@@ -1,4 +1,4 @@
-# qc-benchmark-action
+# QC benchmark action
 A generic github action for conducting scientific QC benchmarks.
 
 
@@ -54,3 +54,18 @@ jobs:
         run: |
           cat $REPORT.summary.csv
 ```
+
+## Contributing
+
+To extend this action with additional benchmarks,
+
+* add a new subfolder to the `benchmarks` directory,
+* and copy the contents of `benchmarks/dummy` to the new subfolder.
+
+Then, modify the contents according to your needs. 
+* The `download.sh` script shall contain the code to download the necessary data for conducting the benchmark. It is invoked within the Conda environment defined in `download-env.yaml`.
+* The `eval.sh` script shall contain the code to evaluate results generated on the benchmark data. It is invoked within the Conda environment defined in `eval-env.yaml`.
+
+Finally, extend the `README.md` file in the repository root with a description of and an example for using your benchmark.
+
+For inspiration, have a look at `benchmarks/giab-na12878-exome`.
