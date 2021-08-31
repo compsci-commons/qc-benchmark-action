@@ -2,6 +2,6 @@ paths:
   read1: reads.1.fq
   read2: reads.2.fq
   truth: truth.vcf
-  confident: confident.bed
+  confidence: confident.bed
   reference: reference.fa
   report: report  # mandatory, reported as an output of the action
