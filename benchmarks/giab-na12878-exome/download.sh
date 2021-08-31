@@ -1,8 +1,8 @@
 set -xeuo pipefail
 IFS=$'\n\t'
 
-# download test data
-samtools view -u \
+# download test data (only keep proper pairs to avoid reads pointing to other chromosomes)
+samtools view -f 3 -u \
     ftp://ftp-trace.ncbi.nih.gov/ReferenceSamples/giab/data/NA12878/Nebraska_NA12878_HG001_TruSeq_Exome/NIST-hg001-7001-ready.bam \
     21 | \
 samtools sort -n -u | \
