@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Download benchmark
         id: benchmark_download
-        uses: compsci-common/qc-benchmark-action@master
+        uses: compsci-common/qc-benchmark-action@main
         with:
           task: download
           benchmark-name: giab-na12878-exome
