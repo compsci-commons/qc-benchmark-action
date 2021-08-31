@@ -62,7 +62,7 @@ To extend this action with additional benchmarks,
 * add a new subfolder to the `benchmarks` directory,
 * and copy the contents of `benchmarks/dummy` to the new subfolder.
 
-Then, modify the contents according to your needs. 
+Then, modify the contents according to your needs.
 * The `download.sh` script shall contain the code to download the necessary data for conducting the benchmark. It is invoked within the Conda environment defined in `download-env.yaml`.
 * The `eval.sh` script shall contain the code to evaluate results generated on the benchmark data. It is invoked within the Conda environment defined in `eval-env.yaml`.
 
