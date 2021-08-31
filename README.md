@@ -6,7 +6,7 @@ A generic github action for conducting scientific QC benchmarks.
 
 ### giab-na12878-exome
 
-Benchmark with chr21 of GIAB NA12878 exome sequencing data.
+Benchmark with chromosome 21 of GIAB NA12878 exome sequencing data.
 
 #### Example workflow
 
