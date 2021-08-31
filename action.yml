@@ -1,5 +1,10 @@
 name: 'QC benchmark action'
 description: 'Perform a scientific QC benchmark consisting of data download and result evaluation'
+
+branding:
+  icon: check
+  color: green
+
 inputs:
   task: 
     description: task to perform; either 'download' or 'eval'
@@ -9,11 +14,13 @@ inputs:
     required: true
   results-path:
     description: path to results that shall be benchmarked
+
 outputs:
   report:
     description: path to report of evaluation results (a directory or a file, depending on the benchmark)
   data:
     description: path to benchmark data
+
 runs:
   using: node12
   main: src/main.js
