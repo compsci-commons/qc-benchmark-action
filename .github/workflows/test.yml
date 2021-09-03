@@ -37,7 +37,7 @@ jobs:
         with:
           task: download
           benchmark-name: dummy
-      
+
       - name: Eval benchmark
         uses: ./
         id: eval
@@ -45,8 +45,9 @@ jobs:
           task: eval
           benchmark-name: dummy
           results-path: bar.txt
-      
-      - env:
-          REPORT: ${{ steps.eval.outputs.report }}
-        run: |
-          cat $REPORT
+
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        with:
+          name: outputs-report
+          path: ${{ steps.eval.outputs.report }}
