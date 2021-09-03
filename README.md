@@ -30,7 +30,7 @@ jobs:
         with:
           task: download
           benchmark-name: giab-na12878-exome
-      
+
       - name: Run your pipeline
         env:
           DATA: ${{ steps.benchmark_eval.outputs.data }}
@@ -38,7 +38,7 @@ jobs:
           # run your pipeline with the test data downloaded above
           # Read location: $DATA/reads.1.fq and $DATA/reads.2.fq
           # Reference genome: $DATA/reference.fa
-          snakemake --cores 1 ... 
+          snakemake --cores 1 ...
 
       - name: Eval benchmark
         uses: compsci-commons/qc-benchmark-action@main
@@ -48,11 +48,11 @@ jobs:
           benchmark-name: giab-na12878-exome
           results-path: calls.vcf
 
-      - name: Show results
-        env:
-          REPORT: ${{ steps.benchmark_eval.outputs.report }}
-        run: |
-          cat $REPORT.summary.csv
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        with:
+          name: outputs-report
+          path: ${{ steps.eval.outputs.report }}
 ```
 
 ## Contributing
