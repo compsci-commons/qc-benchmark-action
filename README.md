@@ -48,17 +48,17 @@ jobs:
           benchmark-name: giab-na12878-exome
           results-path: calls.vcf.gz
 
-      - name: Upload VCF with TP/FP/FN annotations as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: report-vcf
-          path: ${{ steps.benchmark_eval.outputs.report }}.vcf.gz
-
       - name: Show results
         env:
           REPORT: ${{ steps.benchmark_eval.outputs.report }}
         run: |
           cat $REPORT.summary.csv
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: benchmark-report
+          path: ${{ steps.benchmark_eval.outputs.report }}.*
 ```
 
 ## Contributing
