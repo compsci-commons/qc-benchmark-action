@@ -2,6 +2,9 @@ paths:
   read1: reads.1.fq
   read2: reads.2.fq
   truth: truth.vcf
-  confidence: confident.bed
+  confidence_regions_all: confident.all.bed
+  confidence_regions: confident.bed
   reference: reference.fa
+  liftover: liftover.chain.gz
+  target_regions: target_regions.bed
   report: report  # mandatory, reported as an output of the action

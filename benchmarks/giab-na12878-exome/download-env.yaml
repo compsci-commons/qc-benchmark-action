@@ -5,3 +5,4 @@ dependencies:
   - bcftools =1.12
   - samtools =1.12
   - curl =7
+  - ucsc-liftover =377
