@@ -36,5 +36,5 @@ bedtools intersect -a $confidence_regions_all -b $target_regions > $confidence_r
 # download reference genome
 curl --insecure -L \
     https://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.21.fa.gz | \
-    gzip --decompress --stdout
+    gzip --decompress --stdout \
     > $reference
