@@ -3,3 +3,4 @@ channels:
   - conda-forge
 dependencies:
   - hap.py =0.3
+  - samtools =1.12
