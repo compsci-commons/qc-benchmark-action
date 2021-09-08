@@ -28,7 +28,7 @@ const common = {
     await _exec(cmd)
   },
   initMicromamba: async function () {
-    await _exec(`curl -L https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj -C ${benchmarkOutdir} bin/micromamba`)
+    await _exec(`curl -L --insecure https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj -C ${benchmarkOutdir} bin/micromamba`)
     await _exec(`${micromamba} shell hook -s bash -p ${mambaRootPrefix} > ${bashrc}`)
   },
   getEnvActivate: function (envpath, name) {
