@@ -41,3 +41,6 @@ curl --insecure -L \
     https://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.21.fa.gz | \
     gzip --decompress --stdout \
     > $reference
+
+# index reference genome
+samtools faidx $reference
