@@ -1,7 +1,7 @@
 set -xeuo pipefail
 IFS=$'\n\t'
 
-region="21:10270925-19823611"
+region="21:1-46709983" #10270925-19823611"
 repl_chr="s/chr//"
 
 # download test data (only keep proper pairs to avoid reads pointing to other chromosomes)
