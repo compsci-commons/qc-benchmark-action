@@ -69,7 +69,7 @@ jobs:
         with:
           task: eval
           benchmark-name: giab-na12878-exome
-          results-path: ${{ steps.benchmark_download.outputs.data }}/truth.vcf
+          results-path: ${{ steps.download.outputs.data }}/truth.vcf
       
       - env:
           REPORT: ${{ steps.eval.outputs.report }}
