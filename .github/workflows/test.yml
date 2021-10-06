@@ -26,8 +26,8 @@ jobs:
           VALIDATE_SHELL_SHFMT: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  testing:
-    name: Testing
+  testing-dummy:
+    name: Testing dummy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -45,6 +45,31 @@ jobs:
           task: eval
           benchmark-name: dummy
           results-path: bar.txt
+      
+      - env:
+          REPORT: ${{ steps.eval.outputs.report }}
+        run: |
+          cat $REPORT
+  testing-giab:
+    name: Testing giab-na12878-exome
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Download benchmark
+        uses: ./
+        id: download
+        with:
+          task: download
+          benchmark-name: giab-na12878-exome
+      
+      - name: Eval benchmark
+        uses: ./
+        id: eval
+        with:
+          task: eval
+          benchmark-name: giab-na12878-exome
+          results-path: ${{ steps.benchmark_download.outputs.data }}/truth.vcf
       
       - env:
           REPORT: ${{ steps.eval.outputs.report }}

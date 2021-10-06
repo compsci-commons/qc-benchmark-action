@@ -33,7 +33,7 @@ jobs:
       
       - name: Run your pipeline
         env:
-          DATA: ${{ steps.benchmark_eval.outputs.data }}
+          DATA: ${{ steps.benchmark_download.outputs.data }}
         run: |
           # run your pipeline with the test data downloaded above
           # Read location: $DATA/reads.1.fq and $DATA/reads.2.fq
