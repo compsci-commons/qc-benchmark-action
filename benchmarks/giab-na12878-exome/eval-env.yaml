@@ -2,5 +2,5 @@ channels:
   - bioconda
   - conda-forge
 dependencies:
-  - hap.py =0.3
+  - hap.py =0.3.14
   - samtools =1.12
