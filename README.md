@@ -75,3 +75,7 @@ Then, modify the contents according to your needs.
 Finally, extend the `README.md` file in the repository root with a description of and an example for using your benchmark.
 
 For inspiration, have a look at `benchmarks/giab-na12878-exome`.
+
+### Joining the team
+
+Of course, we are keen on adding more benchmarks. If you like to become a maintainer of a particular benchmark, please add it via an initial PR from your fork at first. Then, we will ask you to join our team here, such that you receive write access to the repo for easier maintenance.
