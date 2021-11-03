@@ -36,14 +36,14 @@ jobs:
         uses: ./
         with:
           task: download
-          benchmark-name: dummy
+          benchmark_name: dummy
       
       - name: Eval benchmark
         uses: ./
         id: eval
         with:
           task: eval
-          benchmark-name: dummy
+          benchmark_name: dummy
           results-path: bar.txt
       
       - env:
@@ -61,14 +61,14 @@ jobs:
         id: download
         with:
           task: download
-          benchmark-name: giab-na12878-exome
+          benchmark_name: giab-na12878-exome
       
       - name: Eval benchmark
         uses: ./
         id: eval
         with:
           task: eval
-          benchmark-name: giab-na12878-exome
+          benchmark_name: giab-na12878-exome
           results-path: ${{ steps.download.outputs.data }}/truth.vcf
       
       - env:

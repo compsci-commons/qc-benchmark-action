@@ -29,7 +29,7 @@ jobs:
         uses: compsci-commons/qc-benchmark-action@main
         with:
           task: download
-          benchmark-name: giab-na12878-exome
+          benchmark_name: giab-na12878-exome
       
       - name: Run your pipeline
         env:
@@ -45,7 +45,7 @@ jobs:
         id: benchmark_eval
         with:
           task: eval
-          benchmark-name: giab-na12878-exome
+          benchmark_name: giab-na12878-exome
           results-path: calls.vcf.gz
 
       - name: Show results
