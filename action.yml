@@ -9,11 +9,12 @@ inputs:
   task: 
     description: task to perform; either 'download' or 'eval'
     required: true
-  benchmark-name:
+  benchmark_name:
     description: name of the benchmark to conduct
     required: true
   results-path:
     description: path to results that shall be benchmarked
+  
 
 outputs:
   report:

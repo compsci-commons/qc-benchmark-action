@@ -4,7 +4,7 @@ const yaml = require('js-yaml')
 const fs = require('fs')
 const path = require('path')
 
-const benchmarkName = core.getInput('benchmark-name')
+const benchmarkName = core.getInput('benchmark_name')
 
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 const bashrc = `${benchmarkOutdir}/.bashrc`
