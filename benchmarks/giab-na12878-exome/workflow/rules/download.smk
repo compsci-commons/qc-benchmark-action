@@ -55,6 +55,15 @@ rule get_chromosome:
         "0.79.0/bio/reference/ensembl-sequence"
 
 
+rule samtools_faidx:
+    input:
+        "reference.fasta",
+    output:
+        "reference.fasta.fai",
+    wrapper:
+        "0.79.0/bio/samtools/faidx"
+
+
 rule bwa_index:
     input:
         "reference.fasta",

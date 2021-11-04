@@ -7,6 +7,7 @@ rule download:
         reads,
         expand("test-regions.cov-{cov}.bed", cov=["low", "callable"]),
         "truth.vcf",
+        "reference.fasta.fai",
 
 
 if "results" in config:
