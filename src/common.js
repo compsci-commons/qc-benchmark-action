@@ -9,7 +9,7 @@ const benchmarkName = core.getInput('benchmark_name')
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `source ~/.bashrc; ${cmd}`])
 }
 
 let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
@@ -31,7 +31,7 @@ const common = {
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`conda init bash; conda activate base; mamba env create --yes -n ${name} -f ${envpath}`)
+      await _exec(`conda activate base; mamba env create --yes -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
