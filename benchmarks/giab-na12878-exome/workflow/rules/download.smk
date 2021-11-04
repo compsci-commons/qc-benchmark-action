@@ -95,11 +95,11 @@ rule bwa_mem:
 
 rule samtools_index:
     input:
-        "mapped.bam"
+        "mapped.bam",
     output:
-        "mapped.bam.bai"
+        "mapped.bam.bai",
     log:
-        "logs/samtools-index.log"
+        "logs/samtools-index.log",
     wrapper:
         "0.79.0/bio/samtools/index"
 
