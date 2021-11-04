@@ -1,17 +1,7 @@
-repl_chr = "s/chr//"
-reads = expand("reads.{read}.fq", read=[1, 2])
-
-
-def get_cov_label(wildcards):
-    if wildcards.cov == "low":
-        return "1:5"
-    if wildcards.cov == "callable":
-        return "5:inf"
-
-
 rule get_reads:
     output:
-        reads,
+        r1=reads[0],
+        r2=reads[1],
     log:
         "logs/download-reads.log",
     conda:
@@ -19,7 +9,7 @@ rule get_reads:
     shell:
         "samtools view -f3 -u "
         "ftp://ftp-trace.ncbi.nih.gov/ReferenceSamples/giab/data/NA12878/Nebraska_NA12878_HG001_TruSeq_Exome/NIST-hg001-7001-ready.bam "
-        "21 | samtools sort -n -u | samtools fastq -1 {output[0]} -2 {output[1]} -0 /dev/null - 2> {log}"
+        "21 | samtools sort -n -u | samtools fastq -1 {output.r1} -2 {output.r2} -0 /dev/null - 2> {log}"
 
 
 rule get_truth:
@@ -27,12 +17,14 @@ rule get_truth:
         "truth.vcf",
     log:
         "logs/get-truth.log",
+    params:
+        repl_chr=repl_chr,
     conda:
         "../tools.yaml"
     shell:
         "bcftools view "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.vcf.gz "
-        "chr21 | sed {repl_chr} > {output} 2> {log}"
+        "chr21 | sed {params.repl_chr} > {output} 2> {log}"
 
 
 rule get_confidence_bed:
@@ -71,7 +63,7 @@ rule bwa_index:
     log:
         "logs/bwa-index.log",
     params:
-        prefix="reference",
+        prefix=get_output_prefix,
     wrapper:
         "0.79.0/bio/bwa/index"
 
@@ -85,7 +77,7 @@ rule bwa_mem:
     log:
         "logs/bwa-mem.log",
     params:
-        index="reference",
+        index=get_output_prefix,
         sorting="samtools",  # Can be 'none', 'samtools' or 'picard'.
         sort_order="coordinate",  # Can be 'queryname' or 'coordinate'.
     threads: 8

@@ -1,20 +1,3 @@
-coverages = ["low", "callable"]
-
-happy_report = multiext(
-    "report",
-    ".runinfo.json",
-    ".vcf.gz",
-    ".summary.csv",
-    ".extended.csv",
-    ".metrics.json.gz",
-    ".roc.all.csv.gz",
-    ".roc.Locations.INDEL.csv.gz",
-    ".roc.Locations.INDEL.PASS.csv.gz",
-    ".roc.Locations.SNP.csv.gz",
-    ".roc.tsv",
-)
-
-
 rule stratifications:
     input:
         expand("test-regions.cov-{cov}.bed", cov=coverages),
@@ -50,7 +33,7 @@ rule benchmark_variants:
     output:
         happy_report,
     params:
-        prefix=lambda wc, output: output[0].split(".")[0],
+        prefix=get_output_prefix,
     log:
         "logs/happy.log",
     wrapper:
