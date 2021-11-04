@@ -1,6 +1,7 @@
 repl_chr = "s/chr//"
 reads = expand("reads.{read}.fq", read=[1, 2])
 
+
 def get_cov_label(wildcards):
     if wildcards.cov == "low":
         return "1:5"
@@ -10,9 +11,9 @@ def get_cov_label(wildcards):
 
 rule get_reads:
     output:
-        reads
+        reads,
     log:
-        "logs/download-reads.log"
+        "logs/download-reads.log",
     conda:
         "tools.yaml"
     shell:
@@ -23,9 +24,9 @@ rule get_reads:
 
 rule get_truth:
     output:
-        "truth.vcf"
+        "truth.vcf",
     log:
-        "logs/get-truth.log"
+        "logs/get-truth.log",
     conda:
         "tools.yaml"
     shell:
@@ -36,9 +37,9 @@ rule get_truth:
 
 rule get_confidence_bed:
     output:
-        "confidence-regions.bed"
+        "confidence-regions.bed",
     log:
-        "logs/get-confidence-regions.log"
+        "logs/get-confidence-regions.log",
     conda:
         "tools.yaml"
     shell:
@@ -49,28 +50,28 @@ rule get_confidence_bed:
 
 rule get_chromosome:
     output:
-        "reference.fasta"
+        "reference.fasta",
     params:
         species="homo_sapiens",
         datatype="dna",
         build="GRCh38",
         release="104",
-        chromosome="21"
+        chromosome="21",
     log:
-        "logs/get-genome.log"
+        "logs/get-genome.log",
     wrapper:
         "0.79.0/bio/reference/ensembl-sequence"
 
 
 rule bwa_index:
     input:
-        "reference.fasta"
+        "reference.fasta",
     output:
-        multiext("reference", ".amb", ".ann", ".bwt", ".pac", ".sa")
+        multiext("reference", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
-        "logs/bwa-index.log"
+        "logs/bwa-index.log",
     params:
-        prefix="reference"
+        prefix="reference",
     wrapper:
         "0.79.0/bio/bwa/index"
 
@@ -100,7 +101,7 @@ rule mosdepth:
         "coverage.quantized.bed.gz",
         summary="coverage.mosdepth.summary.txt",  # this named output is required for prefix parsing
     log:
-        "logs/mosdepth/regions/{group}_{sample}.log",
+        "logs/mosdepth.log",
     params:
         extra="--no-per-base",
         quantize="1:5:",
@@ -113,11 +114,11 @@ rule stratify_regions:
         confidence="confidence-regions.bed",
         coverage="coverage.quantized.bed.gz",
     output:
-        "test-regions.cov-{cov}.bed"
+        "test-regions.cov-{cov}.bed",
     log:
-        "logs/stratify-regions/{cov}.log"
+        "logs/stratify-regions/{cov}.log",
     params:
-        cov_label=get_cov_label
+        cov_label=get_cov_label,
     conda:
         "tools.yaml"
     shell:

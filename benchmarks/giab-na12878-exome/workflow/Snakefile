@@ -11,4 +11,4 @@ rule download:
 
 rule eval:
     input:
-        happy_report
+        happy_report,
