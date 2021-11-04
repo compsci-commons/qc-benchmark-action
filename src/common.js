@@ -31,7 +31,7 @@ const common = {
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`mamba env create --yes -n ${name} -f ${envpath}`)
+      await _exec(`conda activate base; mamba env create --yes -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
