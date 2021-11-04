@@ -6,4 +6,3 @@ dependencies:
   - samtools =1.14
   - curl =7
   - bedtools =2.30
-  - hap.py =0.3.14
