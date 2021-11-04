@@ -15,7 +15,7 @@ rule get_reads:
     log:
         "logs/download-reads.log",
     conda:
-        "tools.yaml"
+        "../tools.yaml"
     shell:
         "samtools view -f3 -u "
         "ftp://ftp-trace.ncbi.nih.gov/ReferenceSamples/giab/data/NA12878/Nebraska_NA12878_HG001_TruSeq_Exome/NIST-hg001-7001-ready.bam "
@@ -28,7 +28,7 @@ rule get_truth:
     log:
         "logs/get-truth.log",
     conda:
-        "tools.yaml"
+        "../tools.yaml"
     shell:
         "bcftools view "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.vcf.gz "
@@ -41,7 +41,7 @@ rule get_confidence_bed:
     log:
         "logs/get-confidence-regions.log",
     conda:
-        "tools.yaml"
+        "../tools.yaml"
     shell:
         "curl --insecure -L "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.bed "
@@ -120,7 +120,7 @@ rule stratify_regions:
     params:
         cov_label=get_cov_label,
     conda:
-        "tools.yaml"
+        "../tools.yaml"
     shell:
         "bedtools intersect "
         "-a {input.confidence} "
