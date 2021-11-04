@@ -33,7 +33,7 @@ const common = {
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`mamba env create -n ${name} -f ${envpath}`)
+      await _exec(`mamba env create -q -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
