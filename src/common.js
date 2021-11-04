@@ -6,10 +6,13 @@ const path = require('path')
 
 const benchmarkName = core.getInput('benchmark_name')
 
+
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
+const conda = `${benchmarkOutdir}/mamba/bin/conda`
+const mamba = `${benchmarkOutdir}/mamba/bin/mamba`
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `"cat ~/.bashrc; source ~/.bashrc; ${cmd}"`])
+  await exec.exec('bash', ['-l', '-c', `${cmd}`])
 }
 
 let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
@@ -25,13 +28,13 @@ const common = {
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      return `conda activate ${name}`
+      return `${conda} activate ${name}`
     }
     return ''
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`conda activate base; mamba env create --yes -n ${name} -f ${envpath}`)
+      await _exec(`echo $PATH; ${conda} activate base; ${mamba} env create --yes -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
