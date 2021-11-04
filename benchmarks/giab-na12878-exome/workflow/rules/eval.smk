@@ -32,7 +32,7 @@ rule merge_test_regions:
     input:
         expand("test-regions.cov-{cov}.bed", cov=coverages),
     output:
-        "test-regions.all.bed"
+        "test-regions.all.bed",
     conda:
         "../tools.yaml"
     shell:
