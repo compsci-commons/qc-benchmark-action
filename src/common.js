@@ -8,11 +8,6 @@ const benchmarkName = core.getInput('benchmark_name')
 
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 
-fs.mkdirSync(benchmarkOutdir, { recursive: true })
-if (!fs.existsSync(bashrc)) {
-  fs.closeSync(fs.openSync(bashrc, 'w'))
-}
-
 async function _exec (cmd) {
   await exec.exec('bash', ['-l', '-c', `${cmd}`])
 }
