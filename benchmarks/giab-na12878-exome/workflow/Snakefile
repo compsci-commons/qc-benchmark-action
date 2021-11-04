@@ -9,8 +9,8 @@ rule download:
 
 
 if "results" in config:
-    include: "rules/eval.smk"
 
+    include: "rules/eval.smk"
 
     rule eval:
         input:
