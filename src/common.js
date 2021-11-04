@@ -9,7 +9,7 @@ const benchmarkName = core.getInput('benchmark_name')
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `cat ~/.bashrc; source ~/.bashrc; ${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `${cmd}`])
 }
 
 let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
@@ -21,7 +21,7 @@ const common = {
   },
   initMamba: async function () {
     await _exec(`curl -L --insecure https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh > mambaforge.sh; bash mambaforge.sh -b -p ${benchmarkOutdir}/mamba`)
-    await _exec('conda init bash')
+    await _exec(`${benchmarkOutdir}/mamba/bin/conda init bash`)
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
