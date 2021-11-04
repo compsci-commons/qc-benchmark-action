@@ -20,7 +20,7 @@ happy_report = multiext(
 
 
 def get_output_prefix(wildcards, output):
-    return output[0].multiext_prefix
+    return output[0].split(".")[0]
 
 
 def get_cov_label(wildcards):
