@@ -21,6 +21,7 @@ const common = {
   },
   initMamba: async function () {
     await _exec(`curl -L --insecure https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh > mambaforge.sh; bash mambaforge.sh -b -p ${benchmarkOutdir}/mamba`)
+    await _exec('conda init bash')
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
