@@ -10,9 +10,10 @@ const benchmarkName = core.getInput('benchmark_name')
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 const mambaPrefix = `${benchmarkOutdir}/mamba`
 const condaInit = `${mambaPrefix}/etc/profile.d/conda.sh`;
+const condaActivate = `${mambaPrefix}/bin/activate`
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `test -f ${condaInit} && source ${condaInit}; ${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `test -f ${condaInit} && source ${condaInit} && source ${condaActivate} base; ${cmd}`])
 }
 
 let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
