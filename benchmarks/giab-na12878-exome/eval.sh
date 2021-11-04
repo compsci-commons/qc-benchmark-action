@@ -1,4 +1,6 @@
 set -xeuo pipefail
 IFS=$'\n\t'
 
-snakemake --directory $prefix --config results=`realpath $results` --cores 1 --use-conda
+source=`dirname "$0"`
+
+snakemake --snakefile $source/workflow/Snakefile --directory $prefix --config results=`realpath $results` --cores 1 --use-conda
