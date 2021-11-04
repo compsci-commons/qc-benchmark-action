@@ -7,9 +7,6 @@ const path = require('path')
 const benchmarkName = core.getInput('benchmark_name')
 
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
-const bashrc = `${benchmarkOutdir}/.bashrc`
-const micromamba = `${benchmarkOutdir}/bin/micromamba`
-const mambaRootPrefix = `${benchmarkOutdir}/tmp/micromamba`
 
 fs.mkdirSync(benchmarkOutdir, { recursive: true })
 if (!fs.existsSync(bashrc)) {
@@ -17,7 +14,7 @@ if (!fs.existsSync(bashrc)) {
 }
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `export MAMBA_ROOT_PREFIX=${mambaRootPrefix}; export MAMBA_EXE=${micromamba}; source ${bashrc}; ${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `${cmd}`])
 }
 
 let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
@@ -27,19 +24,18 @@ const common = {
   exec: async function (cmd) {
     await _exec(cmd)
   },
-  initMicromamba: async function () {
-    await _exec(`curl -L --insecure https://micromamba.snakepit.net/api/micromamba/linux-64/latest | tar -xvj -C ${benchmarkOutdir} bin/micromamba`)
-    await _exec(`${micromamba} shell hook -s bash -p ${mambaRootPrefix} > ${bashrc}`)
+  initMamba: async function () {
+    await _exec(`curl -L --insecure https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh | bash /dev/stdin -b -p ${benchmarkOutdir}/mamba`)
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      return `micromamba activate ${name}`
+      return `conda activate ${name}`
     }
     return ''
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`${micromamba} create --yes -n ${name} -f ${envpath}`)
+      await _exec(`mamba env create --yes -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
