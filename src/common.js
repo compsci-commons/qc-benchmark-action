@@ -8,11 +8,11 @@ const benchmarkName = core.getInput('benchmark_name')
 
 
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
-const conda = `${benchmarkOutdir}/mamba/bin/conda`
-const mamba = `${benchmarkOutdir}/mamba/bin/mamba`
+const mambaPrefix = `${benchmarkOutdir}/mamba`
+const condaInit = `${mambaPrefix}/etc/profile.d/conda.sh`;
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `test -f ${condaInit} && source ${condaInit}; ${cmd}`])
 }
 
 let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
@@ -23,18 +23,17 @@ const common = {
     await _exec(cmd)
   },
   initMamba: async function () {
-    await _exec(`curl -L --insecure https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh > mambaforge.sh; bash mambaforge.sh -b -p ${benchmarkOutdir}/mamba`)
-    await _exec(`${benchmarkOutdir}/mamba/bin/conda init bash`)
+    await _exec(`curl -L --insecure https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh > mambaforge.sh; bash mambaforge.sh -b -p ${mambaPrefix}`)
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      return `${conda} activate ${name}`
+      return `source activate ${name}`
     }
     return ''
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`source ${benchmarkOutdir}/mamba/etc/profile.d/conda.sh; echo $PATH; ${conda} activate base; ${mamba} env create --yes -n ${name} -f ${envpath}`)
+      await _exec(`${mamba} env create -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
