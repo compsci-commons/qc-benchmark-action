@@ -9,7 +9,7 @@ const benchmarkName = core.getInput('benchmark_name')
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 
 async function _exec (cmd) {
-  await exec.exec('bash', ['-l', '-c', `source ~/.bashrc; ${cmd}`])
+  await exec.exec('bash', ['-l', '-c', `cat ~/.bashrc; source ~/.bashrc; ${cmd}`])
 }
 
 let meta = path.join(__dirname, `../benchmarks/${benchmarkName}/meta.yaml`)
