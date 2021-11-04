@@ -20,7 +20,7 @@ const common = {
     await _exec(cmd)
   },
   initMamba: async function () {
-    await _exec(`curl -L --insecure https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh | bash /dev/stdin -b -p ${benchmarkOutdir}/mamba`)
+    await _exec(`curl -L --insecure https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh > mambaforge.sh; bash mambaforge.sh -b -p ${benchmarkOutdir}/mamba`)
   },
   getEnvActivate: function (envpath, name) {
     if (fs.existsSync(envpath)) {
