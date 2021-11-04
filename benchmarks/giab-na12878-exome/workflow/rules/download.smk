@@ -32,7 +32,7 @@ rule get_truth:
     shell:
         "bcftools view "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.vcf.gz "
-        "chr21 | sed {repl_chr} > {output}"
+        "chr21 | sed {repl_chr} > {output} 2> {log}"
 
 
 rule get_confidence_bed:
@@ -45,7 +45,7 @@ rule get_confidence_bed:
     shell:
         "curl --insecure -L "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.bed "
-        "> {output}"
+        "> {output} 2> {log}"
 
 
 rule get_chromosome:
