@@ -93,9 +93,21 @@ rule bwa_mem:
         "0.79.0/bio/bwa/mem"
 
 
+rule samtools_index:
+    input:
+        "mapped.bam"
+    output:
+        "mapped.bam.bai"
+    log:
+        "logs/samtools-index.log"
+    wrapper:
+        "0.79.0/bio/samtools/index"
+
+
 rule mosdepth:
     input:
         bam="mapped.bam",
+        bai="mapped.bam.bai",
     output:
         "coverage.mosdepth.global.dist.txt",
         "coverage.quantized.bed.gz",
