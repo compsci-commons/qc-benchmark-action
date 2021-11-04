@@ -1,3 +1,4 @@
+
 rule stratifications:
     input:
         expand("test-regions.cov-{cov}.bed", cov=coverages),
