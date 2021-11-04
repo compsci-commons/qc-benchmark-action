@@ -34,7 +34,7 @@ const common = {
   },
   initEnv: async function (envpath, name) {
     if (fs.existsSync(envpath)) {
-      await _exec(`echo $PATH; ${conda} activate base; ${mamba} env create --yes -n ${name} -f ${envpath}`)
+      await _exec(`source ${benchmarkOutdir}/mamba/etc/profile.d; echo $PATH; ${conda} activate base; ${mamba} env create --yes -n ${name} -f ${envpath}`)
     }
   },
   getBenchmarkName: function () {
