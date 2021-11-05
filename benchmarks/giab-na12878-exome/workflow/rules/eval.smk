@@ -17,6 +17,8 @@ rule merge_test_regions:
         expand("test-regions.cov-{cov}.bed", cov=coverages),
     output:
         "test-regions.all.bed",
+    log:
+        "logs/merge-test-regions.log",
     conda:
         "../tools.yaml"
     shell:
