@@ -98,16 +98,16 @@ rule bwa_mem:
 
 rule mark_duplicates:
     input:
-        "mapped.bam"
+        "mapped.bam",
     output:
         bam="mapped.dedup.bam",
-        metrics="dedup.metrics.txt"
+        metrics="dedup.metrics.txt",
     log:
-        "logs/picard-dedup.log"
+        "logs/picard-dedup.log",
     params:
-        extra="REMOVE_DUPLICATES=true"
+        extra="REMOVE_DUPLICATES=true",
     resources:
-        mem_mb=1024
+        mem_mb=1024,
     wrapper:
         "0.79.0/bio/picard/markduplicates"
 
