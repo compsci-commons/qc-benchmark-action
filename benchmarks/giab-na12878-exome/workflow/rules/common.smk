@@ -21,6 +21,7 @@ happy_report = multiext(
 def get_io_prefix(getter):
     def inner(wildcards, input, output):
         return getter(input, output).split(".")[0]
+
     return inner
 
 

@@ -24,6 +24,7 @@ jobs:
           VALIDATE_BASH_EXEC: false
           VALIDATE_BASH: false
           VALIDATE_SHELL_SHFMT: false
+          VALIDATE_SNAKEMAKE_LINT: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   testing-dummy:
