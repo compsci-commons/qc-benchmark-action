@@ -6,10 +6,9 @@ const path = require('path')
 
 const benchmarkName = core.getInput('benchmark_name')
 
-
 const benchmarkOutdir = `benchmark-data/${benchmarkName}`
 const mambaPrefix = `${benchmarkOutdir}/mamba`
-const condaInit = `${mambaPrefix}/etc/profile.d/conda.sh`;
+const condaInit = `${mambaPrefix}/etc/profile.d/conda.sh`
 const condaActivate = `${mambaPrefix}/bin/activate`
 
 async function _exec (cmd) {
