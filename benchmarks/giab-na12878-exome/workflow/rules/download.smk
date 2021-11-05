@@ -135,7 +135,7 @@ rule mosdepth:
         "logs/mosdepth.log",
     params:
         extra="--no-per-base",
-        quantize="1:5:",
+        quantize="1:10:30:",
     wrapper:
         "0.77.0/bio/mosdepth"
 

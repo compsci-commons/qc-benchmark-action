@@ -37,6 +37,7 @@ rule benchmark_variants:
         happy_report,
     params:
         prefix=get_io_prefix(lambda input, output: output[0]),
+        engine="vcfeval",
     log:
         "logs/happy.log",
     wrapper:

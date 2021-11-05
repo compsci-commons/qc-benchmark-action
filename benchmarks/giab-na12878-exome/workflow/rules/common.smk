@@ -2,7 +2,7 @@ repl_chr = "s/chr//"
 reads = expand("reads.{read}.fq", read=[1, 2])
 bwa_index = multiext("reference", ".amb", ".ann", ".bwt", ".pac", ".sa")
 
-coverages = ["low", "callable"]
+coverages = ["low", "medium", "high"]
 
 happy_report = multiext(
     "report",
@@ -27,6 +27,8 @@ def get_io_prefix(getter):
 
 def get_cov_label(wildcards):
     if wildcards.cov == "low":
-        return "1:5"
-    if wildcards.cov == "callable":
-        return "5:inf"
+        return "1:10"
+    if wildcards.cov == "medium":
+        return "10:30"
+    if wildcards.cov == "high":
+        return "30:inf"
