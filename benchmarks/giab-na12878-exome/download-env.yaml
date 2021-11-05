@@ -2,8 +2,4 @@ channels:
   - bioconda
   - conda-forge
 dependencies:
-  - bcftools =1.12
-  - samtools =1.12
-  - curl =7
-  - ucsc-liftover =377
-  - bedtools =2.30
+  - snakemake-minimal =6.10

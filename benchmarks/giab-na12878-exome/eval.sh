@@ -1,4 +1,6 @@
 set -xeuo pipefail
 IFS=$'\n\t'
 
-hap.py $truth $results -f $confidence_regions -o $report -r $reference --write-vcf
+source=`dirname "$0"`
+
+snakemake eval --snakefile $source/workflow/Snakefile --directory $prefix --config results=`realpath $results` --cores 1 --use-conda

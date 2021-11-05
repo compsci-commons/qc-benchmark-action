@@ -5,7 +5,7 @@ async function doInit () {
   const benchmarkName = common.getBenchmarkName()
   console.log(`Download data for ${benchmarkName}.`)
 
-  await common.initMicromamba()
+  await common.initMamba()
 
   const envpath = common.getBenchmarkFile('download-env.yaml')
   const envname = 'download-env'

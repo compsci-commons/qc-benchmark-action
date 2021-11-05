@@ -1,0 +1,19 @@
+include: "rules/common.smk"
+include: "rules/download.smk"
+
+
+rule download:
+    input:
+        reads,
+        expand("test-regions.cov-{cov}.bed", cov=["low", "callable"]),
+        "truth.vcf",
+        "reference.fasta.fai",
+
+
+if "results" in config:
+
+    include: "rules/eval.smk"
+
+    rule eval:
+        input:
+            happy_report,
