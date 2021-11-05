@@ -4,12 +4,14 @@ rule get_reads:
         r2=reads[1],
     log:
         "logs/download-reads.log",
+    params:
+        chromosome=chromosome
     conda:
         "../tools.yaml"
     shell:
         "samtools view -f3 -u "
         "ftp://ftp-trace.ncbi.nih.gov/ReferenceSamples/giab/data/NA12878/Nebraska_NA12878_HG001_TruSeq_Exome/NIST-hg001-7001-ready.bam "
-        "21 | samtools sort -n -u | samtools fastq -1 {output.r1} -2 {output.r2} -0 /dev/null - 2> {log}"
+        "{params.chromosome} | samtools sort -n -u | samtools fastq -1 {output.r1} -2 {output.r2} -0 /dev/null - 2> {log}"
 
 
 rule get_truth:
@@ -19,12 +21,13 @@ rule get_truth:
         "logs/get-truth.log",
     params:
         repl_chr=repl_chr,
+        chromosome=chromosome,
     conda:
         "../tools.yaml"
     shell:
         "bcftools view "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.vcf.gz "
-        "chr21 | sed {params.repl_chr} > {output} 2> {log}"
+        "chr{params.chromosome} | sed {params.repl_chr} > {output} 2> {log}"
 
 
 rule get_confidence_bed:
@@ -50,7 +53,7 @@ rule get_chromosome:
         datatype="dna",
         build="GRCh38",
         release="104",
-        chromosome="21",
+        chromosome=chromosome,
     log:
         "logs/get-genome.log",
     wrapper:
