@@ -15,7 +15,6 @@ happy_report = multiext(
     ".roc.Locations.INDEL.csv.gz",
     ".roc.Locations.INDEL.PASS.csv.gz",
     ".roc.Locations.SNP.csv.gz",
-    ".roc.tsv",
 )
 
 
