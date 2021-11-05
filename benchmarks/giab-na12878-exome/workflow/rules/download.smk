@@ -32,12 +32,14 @@ rule get_confidence_bed:
         "confidence-regions.bed",
     log:
         "logs/get-confidence-regions.log",
+    params:
+        repl_chr=repl_chr,
     conda:
         "../tools.yaml"
     shell:
         "curl --insecure -L "
-        "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.bed "
-        "> {output} 2> {log}"
+        "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.bed | "
+        "sed {params.repl_chr} > {output} 2> {log}"
 
 
 rule get_chromosome:
