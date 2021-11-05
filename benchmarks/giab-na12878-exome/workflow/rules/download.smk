@@ -96,11 +96,27 @@ rule bwa_mem:
         "0.79.0/bio/bwa/mem"
 
 
+rule mark_duplicates:
+    input:
+        "mapped.bam"
+    output:
+        bam="mapped.dedup.bam",
+        metrics="dedup.metrics.txt"
+    log:
+        "logs/picard-dedup.log"
+    params:
+        extra="REMOVE_DUPLICATES=true"
+    resources:
+        mem_mb=1024
+    wrapper:
+        "0.79.0/bio/picard/markduplicates"
+
+
 rule samtools_index:
     input:
-        "mapped.bam",
+        "mapped.dedup.bam",
     output:
-        "mapped.bam.bai",
+        "mapped.dedup.bam.bai",
     log:
         "logs/samtools-index.log",
     wrapper:
@@ -109,8 +125,8 @@ rule samtools_index:
 
 rule mosdepth:
     input:
-        bam="mapped.bam",
-        bai="mapped.bam.bai",
+        bam="mapped.dedup.bam",
+        bai="mapped.dedup.bam.bai",
     output:
         "coverage.mosdepth.global.dist.txt",
         "coverage.quantized.bed.gz",
