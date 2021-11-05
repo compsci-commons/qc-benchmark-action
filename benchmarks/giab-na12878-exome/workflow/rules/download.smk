@@ -72,7 +72,7 @@ rule bwa_index:
     log:
         "logs/bwa-index.log",
     params:
-        prefix=get_output_prefix,
+        prefix=get_io_prefix(lambda input, output: output[0]),
     wrapper:
         "0.79.0/bio/bwa/index"
 
@@ -86,7 +86,7 @@ rule bwa_mem:
     log:
         "logs/bwa-mem.log",
     params:
-        index=get_output_prefix,
+        index=get_io_prefix(lambda input, output: input.index[0]),
         sorting="samtools",  # Can be 'none', 'samtools' or 'picard'.
         sort_order="coordinate",  # Can be 'queryname' or 'coordinate'.
     threads: 8

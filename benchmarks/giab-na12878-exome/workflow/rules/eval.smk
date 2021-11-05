@@ -34,7 +34,7 @@ rule benchmark_variants:
     output:
         happy_report,
     params:
-        prefix=get_output_prefix,
+        prefix=get_io_prefix(lambda input, output: output[0]),
     log:
         "logs/happy.log",
     wrapper:

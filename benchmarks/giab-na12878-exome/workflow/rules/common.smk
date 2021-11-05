@@ -19,8 +19,9 @@ happy_report = multiext(
 )
 
 
-def get_output_prefix(wildcards, output):
-    return output[0].split(".")[0]
+def get_io_prefix(getter):
+    def inner(wildcards, input, output):
+        return getter(input, output).split(".")[0]
 
 
 def get_cov_label(wildcards):
