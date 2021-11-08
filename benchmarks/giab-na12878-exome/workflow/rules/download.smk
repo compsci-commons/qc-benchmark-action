@@ -137,7 +137,7 @@ rule mosdepth:
     log:
         "logs/mosdepth.log",
     params:
-        extra="--no-per-base",
+        extra="--no-per-base --mapq 59", # we do not want low MAPQ regions end up being marked as high coverage
         quantize="1:10:30:",
     wrapper:
         "0.77.0/bio/mosdepth"
