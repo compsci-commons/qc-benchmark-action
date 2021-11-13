@@ -16,4 +16,4 @@ if "results" in config:
 
     rule eval:
         input:
-            happy_report,
+            "report.tsv",

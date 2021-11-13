@@ -12,9 +12,10 @@ inputs:
   benchmark_name:
     description: name of the benchmark to conduct
     required: true
-  results-path:
+  results_path:
     description: path to results that shall be benchmarked
-  
+  args:
+    description: additional arguments for the given task
 
 outputs:
   report:

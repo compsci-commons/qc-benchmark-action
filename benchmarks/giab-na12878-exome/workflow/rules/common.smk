@@ -5,19 +5,6 @@ bwa_index = multiext("reference", ".amb", ".ann", ".bwt", ".pac", ".sa")
 
 coverages = ["low", "medium", "high"]
 
-happy_report = multiext(
-    "report",
-    ".runinfo.json",
-    ".vcf.gz",
-    ".summary.csv",
-    ".extended.csv",
-    ".metrics.json.gz",
-    ".roc.all.csv.gz",
-    ".roc.Locations.INDEL.csv.gz",
-    ".roc.Locations.INDEL.PASS.csv.gz",
-    ".roc.Locations.SNP.csv.gz",
-)
-
 
 def get_io_prefix(getter):
     def inner(wildcards, input, output):

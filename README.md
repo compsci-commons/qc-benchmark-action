@@ -46,7 +46,7 @@ jobs:
         with:
           task: eval
           benchmark_name: giab-na12878-exome
-          results-path: calls.vcf.gz
+          results_path: calls.vcf.gz
 
       - name: Show results
         env:

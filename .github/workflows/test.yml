@@ -45,7 +45,7 @@ jobs:
         with:
           task: eval
           benchmark_name: dummy
-          results-path: bar.txt
+          results_path: bar.txt
       
       - env:
           REPORT: ${{ steps.eval.outputs.report }}
@@ -70,7 +70,7 @@ jobs:
         with:
           task: eval
           benchmark_name: giab-na12878-exome
-          results-path: ${{ steps.download.outputs.data }}/truth.vcf
+          results_path: ${{ steps.download.outputs.data }}/truth.vcf
       
       - env:
           REPORT: ${{ steps.eval.outputs.report }}

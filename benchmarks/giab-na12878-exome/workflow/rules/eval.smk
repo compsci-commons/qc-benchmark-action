@@ -1,50 +1,76 @@
 
-rule stratifications:
+rule stratify_truth:
     input:
-        expand("benchmark/test-regions.cov-{cov}.bed", cov=coverages),
+        variants="benchmark/truth.vcf",
+        regions="benchmark/test-regions.cov-{cov}.bed",
     output:
-        "benchmark/stratifications.tsv",
+        "benchmark/truth.cov-{cov}.vcf.gz",
     log:
-        "logs/stratification-init.log",
-    run:
-        with open(output[0], "w") as out:
-            for cov, f in zip(coverages, input):
-                print(cov, f, sep="\t", file=out)
-
-
-rule merge_test_regions:
-    input:
-        expand("benchmark/test-regions.cov-{cov}.bed", cov=coverages),
-    output:
-        "benchmark/test-regions.all.bed",
-    log:
-        "logs/merge-test-regions.log",
+        "logs/stratify-truth.{cov}.log",
     conda:
-        "../tools.yaml"
+        "../envs/tools.yaml"
     shell:
-        "bedtools sort -i <(cat {input}) > {output} 2> {log}"
+        "bedtools intersect -b {input.regions} -a <(bcftools view {input.variants}) -wa -f 1.0 -header | bcftools view -Oz > {output} 2> {log}"
+
+
+use rule stratify_truth as stratify_results with:
+    input:
+        variants=config["results"],
+        regions="benchmark/test-regions.cov-{cov}.bed",
+    output:
+        "stratified-results/{cov}.vcf.gz",
+    log:
+        "logs/stratify-results.{cov}.log",
+
+
+rule bcftools_index:
+    input:
+        "benchmark/truth.cov-{cov}.vcf.gz",
+    output:
+        "benchmark/truth.cov-{cov}.vcf.gz.csi",
+    wrapper:
+        "v0.80.1/bio/bcftools/index"
 
 
 rule benchmark_variants:
     input:
-        truth="benchmark/truth.vcf",
-        query=config["results"],
-        truth_regions="benchmark/test-regions.all.bed",
-        strats="benchmark/stratifications.tsv",
+        truth="benchmark/truth.cov-{cov}.vcf.gz",
+        truth_idx="benchmark/truth.cov-{cov}.vcf.gz.csi",
+        query="stratified-results/{cov}.vcf.gz",
         genome="reference/reference.fasta",
         genome_index="reference/reference.fasta.fai",
     output:
-        happy_report,
+        multiext(
+            "report-cov-{cov}",
+            ".runinfo.json",
+            ".vcf.gz",
+            ".summary.csv",
+            ".extended.csv",
+            ".metrics.json.gz",
+            ".roc.all.csv.gz",
+            ".roc.Locations.INDEL.csv.gz",
+            ".roc.Locations.INDEL.PASS.csv.gz",
+            ".roc.Locations.SNP.csv.gz",
+        ),
     params:
         prefix=get_io_prefix(lambda input, output: output[0]),
         engine="vcfeval",
     log:
-        "logs/happy.log",
+        "logs/happy.{cov}.log",
     wrapper:
-        "0.79.0/bio/hap.py/hap.py"
+        "0.80.1/bio/hap.py/hap.py"
 
 
-# rule extract_false_positives:
-#     input:
-#         "report.vcf.gz"
-#     output:
+rule collect_stratifications:
+    input:
+        expand("report-cov-{cov}.summary.csv", cov=coverages),
+    output:
+        "report.tsv",
+    params:
+        coverages=coverages,
+    log:
+        "logs/collect-stratifications.log",
+    conda:
+        "../envs/pandas.yaml"
+    script:
+        "../scripts/collect-stratifications.py"

@@ -5,9 +5,9 @@ rule get_reads:
     log:
         "logs/download-reads.log",
     params:
-        chromosome=chromosome
+        chromosome=chromosome,
     conda:
-        "../tools.yaml"
+        "../envs/tools.yaml"
     shell:
         "samtools view -f3 -u "
         "ftp://ftp-trace.ncbi.nih.gov/ReferenceSamples/giab/data/NA12878/Nebraska_NA12878_HG001_TruSeq_Exome/NIST-hg001-7001-ready.bam "
@@ -23,7 +23,7 @@ rule get_truth:
         repl_chr=repl_chr,
         chromosome=chromosome,
     conda:
-        "../tools.yaml"
+        "../envs/tools.yaml"
     shell:
         "bcftools view "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.vcf.gz "
@@ -38,7 +38,7 @@ rule get_confidence_bed:
     params:
         repl_chr=repl_chr,
     conda:
-        "../tools.yaml"
+        "../envs/tools.yaml"
     shell:
         "curl --insecure -L "
         "https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.bed | "
@@ -137,7 +137,7 @@ rule mosdepth:
     log:
         "logs/mosdepth.log",
     params:
-        extra="--no-per-base --mapq 59", # we do not want low MAPQ regions end up being marked as high coverage
+        extra="--no-per-base --mapq 59",  # we do not want low MAPQ regions end up being marked as high coverage
         quantize="1:10:30:",
     wrapper:
         "0.77.0/bio/mosdepth"
@@ -154,7 +154,7 @@ rule stratify_regions:
     params:
         cov_label=get_cov_label,
     conda:
-        "../tools.yaml"
+        "../envs/tools.yaml"
     shell:
         "bedtools intersect "
         "-a {input.confidence} "
