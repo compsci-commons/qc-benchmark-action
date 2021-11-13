@@ -65,6 +65,8 @@ rule samtools_faidx:
         "reference/reference.fasta",
     output:
         "reference/reference.fasta.fai",
+    log:
+        "logs/samtools-faidx.log",
     wrapper:
         "0.79.0/bio/samtools/faidx"
 
