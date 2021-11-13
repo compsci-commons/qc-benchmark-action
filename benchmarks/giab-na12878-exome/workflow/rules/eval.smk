@@ -1,9 +1,9 @@
 
 rule stratifications:
     input:
-        expand("test-regions.cov-{cov}.bed", cov=coverages),
+        expand("benchmark/test-regions.cov-{cov}.bed", cov=coverages),
     output:
-        "stratifications.tsv",
+        "benchmark/stratifications.tsv",
     log:
         "logs/stratification-init.log",
     run:
@@ -14,9 +14,9 @@ rule stratifications:
 
 rule merge_test_regions:
     input:
-        expand("test-regions.cov-{cov}.bed", cov=coverages),
+        expand("benchmark/test-regions.cov-{cov}.bed", cov=coverages),
     output:
-        "test-regions.all.bed",
+        "benchmark/test-regions.all.bed",
     log:
         "logs/merge-test-regions.log",
     conda:
@@ -27,12 +27,12 @@ rule merge_test_regions:
 
 rule benchmark_variants:
     input:
-        truth="truth.vcf",
+        truth="benchmark/truth.vcf",
         query=config["results"],
-        truth_regions="test-regions.all.bed",
-        strats="stratifications.tsv",
-        genome="reference.fasta",
-        genome_index="reference.fasta.fai",
+        truth_regions="benchmark/test-regions.all.bed",
+        strats="benchmark/stratifications.tsv",
+        genome="reference/reference.fasta",
+        genome_index="reference/reference.fasta.fai",
     output:
         happy_report,
     params:
@@ -42,3 +42,9 @@ rule benchmark_variants:
         "logs/happy.log",
     wrapper:
         "0.79.0/bio/hap.py/hap.py"
+
+
+# rule extract_false_positives:
+#     input:
+#         "report.vcf.gz"
+#     output:

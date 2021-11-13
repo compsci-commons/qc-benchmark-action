@@ -16,7 +16,7 @@ rule get_reads:
 
 rule get_truth:
     output:
-        "truth.vcf",
+        "benchmark/truth.vcf",
     log:
         "logs/get-truth.log",
     params:
@@ -32,7 +32,7 @@ rule get_truth:
 
 rule get_confidence_bed:
     output:
-        "confidence-regions.bed",
+        "benchmark/confidence-regions.bed",
     log:
         "logs/get-confidence-regions.log",
     params:
@@ -47,7 +47,7 @@ rule get_confidence_bed:
 
 rule get_chromosome:
     output:
-        "reference.fasta",
+        "reference/reference.fasta",
     params:
         species="homo_sapiens",
         datatype="dna",
@@ -62,18 +62,18 @@ rule get_chromosome:
 
 rule samtools_faidx:
     input:
-        "reference.fasta",
+        "reference/reference.fasta",
     output:
-        "reference.fasta.fai",
+        "reference/reference.fasta.fai",
     wrapper:
         "0.79.0/bio/samtools/faidx"
 
 
 rule bwa_index:
     input:
-        "reference.fasta",
+        "reference/reference.fasta",
     output:
-        multiext("reference", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        multiext("reference/reference", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     log:
         "logs/bwa-index.log",
     params:
@@ -85,9 +85,9 @@ rule bwa_index:
 rule bwa_mem:
     input:
         reads=reads,
-        index=multiext("reference", ".amb", ".ann", ".bwt", ".pac", ".sa"),
+        index=multiext("reference/reference", ".amb", ".ann", ".bwt", ".pac", ".sa"),
     output:
-        "mapped.bam",
+        "reads/mapped.bam",
     log:
         "logs/bwa-mem.log",
     params:
@@ -101,10 +101,10 @@ rule bwa_mem:
 
 rule mark_duplicates:
     input:
-        "mapped.bam",
+        "reads/mapped.bam",
     output:
-        bam="mapped.dedup.bam",
-        metrics="dedup.metrics.txt",
+        bam="reads/mapped.dedup.bam",
+        metrics="reads/dedup.metrics.txt",
     log:
         "logs/picard-dedup.log",
     params:
@@ -117,9 +117,9 @@ rule mark_duplicates:
 
 rule samtools_index:
     input:
-        "mapped.dedup.bam",
+        "reads/mapped.dedup.bam",
     output:
-        "mapped.dedup.bam.bai",
+        "reads/mapped.dedup.bam.bai",
     log:
         "logs/samtools-index.log",
     wrapper:
@@ -128,12 +128,12 @@ rule samtools_index:
 
 rule mosdepth:
     input:
-        bam="mapped.dedup.bam",
-        bai="mapped.dedup.bam.bai",
+        bam="reads/mapped.dedup.bam",
+        bai="reads/mapped.dedup.bam.bai",
     output:
-        "coverage.mosdepth.global.dist.txt",
-        "coverage.quantized.bed.gz",
-        summary="coverage.mosdepth.summary.txt",  # this named output is required for prefix parsing
+        "coverage/coverage.mosdepth.global.dist.txt",
+        "coverage/coverage.quantized.bed.gz",
+        summary="coverage/coverage.mosdepth.summary.txt",  # this named output is required for prefix parsing
     log:
         "logs/mosdepth.log",
     params:
@@ -145,10 +145,10 @@ rule mosdepth:
 
 rule stratify_regions:
     input:
-        confidence="confidence-regions.bed",
-        coverage="coverage.quantized.bed.gz",
+        confidence="benchmark/confidence-regions.bed",
+        coverage="coverage/coverage.quantized.bed.gz",
     output:
-        "test-regions.cov-{cov}.bed",
+        "benchmark/test-regions.cov-{cov}.bed",
     log:
         "logs/stratify-regions/{cov}.log",
     params:
