@@ -5,9 +5,11 @@ include: "rules/download.smk"
 rule download:
     input:
         reads,
-        expand("test-regions.cov-{cov}.bed", cov=["low", "callable"]),
-        "truth.vcf",
-        "reference.fasta.fai",
+        expand("benchmark/test-regions.cov-{cov}.bed", cov=["low", "callable"]),
+        "reference/reference.fasta",
+        "reference/reference.fasta.fai",
+        "benchmark/truth.vcf",
+        "benchmark/target-regions.bed",
 
 
 if "results" in config:

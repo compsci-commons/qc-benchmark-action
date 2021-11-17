@@ -71,7 +71,7 @@ rule get_target_bed:
         " liftOver /dev/stdin {input.liftover} {output} /dev/null) 2> {log}"
 
 
-rule fix_target_bed:
+rule postprocess_target_bed:
     input:
         "benchmark/target-regions.raw.bed"
     output:
@@ -80,10 +80,11 @@ rule fix_target_bed:
         "logs/fix-target-bed.log"
     params:
         repl_chr=repl_chr,
+        chromosome=chromosome,
     conda:
         "../envs/tools.yaml"
     shell:
-        "sed {params.repl_chr} {input} > {output} 2> {log}"
+        "grep chr{params.chromosome} {input} | sed {params.repl_chr} > {output} 2> {log}"
 
 
 rule get_chromosome:
