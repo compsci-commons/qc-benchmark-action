@@ -49,7 +49,7 @@ rule get_liftover_track:
     output:
         "benchmark/liftover.chain.gz",
     log:
-        "logs/get-liftover-track.log"
+        "logs/get-liftover-track.log",
     conda:
         "../envs/tools.yaml"
     shell:
@@ -62,7 +62,7 @@ rule get_target_bed:
     output:
         pipe("benchmark/target-regions.raw.bed"),
     log:
-        "logs/get-target-bed.log"
+        "logs/get-target-bed.log",
     conda:
         "../envs/tools.yaml"
     shell:
@@ -73,11 +73,11 @@ rule get_target_bed:
 
 rule postprocess_target_bed:
     input:
-        "benchmark/target-regions.raw.bed"
+        "benchmark/target-regions.raw.bed",
     output:
-        "benchmark/target-regions.bed"
+        "benchmark/target-regions.bed",
     log:
-        "logs/fix-target-bed.log"
+        "logs/fix-target-bed.log",
     params:
         repl_chr=repl_chr,
         chromosome=chromosome,
