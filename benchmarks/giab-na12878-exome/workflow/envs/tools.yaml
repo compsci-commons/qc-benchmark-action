@@ -6,3 +6,4 @@ dependencies:
   - samtools =1.14
   - curl =7
   - bedtools =2.30
+  - ucsc-liftover =377

@@ -3,4 +3,4 @@ IFS=$'\n\t'
 
 source=`dirname "$0"`
 
-snakemake download --snakefile $source/workflow/Snakefile --directory $prefix --cores 1 --use-conda --show-failed-logs
+snakemake download --cores 2 --snakefile $source/workflow/Snakefile --directory $prefix --use-conda --show-failed-logs --all-temp

@@ -45,6 +45,48 @@ rule get_confidence_bed:
         "sed {params.repl_chr} > {output} 2> {log}"
 
 
+rule get_liftover_track:
+    output:
+        "benchmark/liftover.chain.gz",
+    log:
+        "logs/get-liftover-track.log",
+    conda:
+        "../envs/tools.yaml"
+    shell:
+        "curl --insecure -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/liftOver/hg19ToHg38.over.chain.gz > {output} 2> {log}"
+
+
+rule get_target_bed:
+    input:
+        liftover="benchmark/liftover.chain.gz",
+    output:
+        pipe("benchmark/target-regions.raw.bed"),
+    log:
+        "logs/get-target-bed.log",
+    conda:
+        "../envs/tools.yaml"
+    shell:
+        "(curl --insecure -L"
+        " ftp://ftp-trace.ncbi.nih.gov/ReferenceSamples/giab/data/NA12878/Nebraska_NA12878_HG001_TruSeq_Exome/TruSeq_exome_targeted_regions.hg19.bed |"
+        " liftOver /dev/stdin {input.liftover} {output} /dev/null) 2> {log}"
+
+
+rule postprocess_target_bed:
+    input:
+        "benchmark/target-regions.raw.bed",
+    output:
+        "benchmark/target-regions.bed",
+    log:
+        "logs/fix-target-bed.log",
+    params:
+        repl_chr=repl_chr,
+        chromosome=chromosome,
+    conda:
+        "../envs/tools.yaml"
+    shell:
+        "grep chr{params.chromosome} {input} | sed {params.repl_chr} > {output} 2> {log}"
+
+
 rule get_chromosome:
     output:
         "reference/reference.fasta",
@@ -148,6 +190,7 @@ rule mosdepth:
 rule stratify_regions:
     input:
         confidence="benchmark/confidence-regions.bed",
+        target="benchmark/target-regions.bed",
         coverage="coverage/coverage.quantized.bed.gz",
     output:
         "benchmark/test-regions.cov-{cov}.bed",
@@ -158,7 +201,8 @@ rule stratify_regions:
     conda:
         "../envs/tools.yaml"
     shell:
-        "bedtools intersect "
-        "-a {input.confidence} "
-        "-b <(zcat {input.coverage} | grep '{params.cov_label}') "
-        "> {output} 2> {log}"
+        "(bedtools intersect"
+        " -a {input.confidence}"
+        " -b <(zcat {input.coverage} | grep '{params.cov_label}') |"
+        " bedtools intersect -a /dev/stdin -b {input.target}"
+        ") > {output} 2> {log}"

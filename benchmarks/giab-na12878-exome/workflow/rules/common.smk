@@ -1,4 +1,4 @@
-chromosome = "15"
+chromosome = "1"
 repl_chr = "s/chr//"
 reads = expand("reads.{read}.fq", read=[1, 2])
 bwa_index = multiext("reference", ".amb", ".ann", ".bwt", ".pac", ".sa")
