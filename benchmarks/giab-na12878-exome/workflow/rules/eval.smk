@@ -6,7 +6,9 @@ rule normalize_calls:
     output:
         "normalized-results/all.vcf.gz"
     params:
-        lambda w, input: f"--atomic -f {input.genome} --rm-dup exact -Oz"
+        lambda w, input: f"--atomize -f {input.genome} --rm-dup exact -Oz"
+    conda:
+        "../envs/tools.yaml"
     wrapper:
         "0.80.2/bio/bcftools/norm"
 
