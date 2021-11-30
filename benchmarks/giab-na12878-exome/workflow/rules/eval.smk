@@ -1,3 +1,15 @@
+rule normalize_calls:
+    input:
+        config["results"],
+        genome="reference/reference.fasta",
+        genome_index="reference/reference.fasta.fai",
+    output:
+        "normalized-results/all.vcf.gz"
+    params:
+        lambda w, input: f"--atomic -f {input.genome} --rm-dup exact -Oz"
+    wrapper:
+        "0.80.2/bio/bcftools/norm"
+
 
 rule stratify_truth:
     input:
@@ -15,7 +27,7 @@ rule stratify_truth:
 
 use rule stratify_truth as stratify_results with:
     input:
-        variants=config["results"],
+        variants="normalized-results/all.vcf.gz",
         regions="benchmark/test-regions.cov-{cov}.bed",
     output:
         "stratified-results/{cov}.vcf.gz",
