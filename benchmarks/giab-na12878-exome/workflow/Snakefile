@@ -5,7 +5,7 @@ if "results" in config:
 module giab_benchmark:
     snakefile:
         github(
-            "snakemake-workflows/giab-benchmark",
+            "snakemake-workflows/benchmark-giab",
             path="workflow/Snakefile",
             tag="v1.0.0",
         )
