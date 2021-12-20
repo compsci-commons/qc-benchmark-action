@@ -48,17 +48,11 @@ jobs:
           benchmark_name: giab-na12878-exome
           results_path: calls.vcf.gz
 
-      - name: Show results
-        env:
-          REPORT: ${{ steps.benchmark_eval.outputs.report }}
-        run: |
-          cat $REPORT.summary.csv
-
       - name: Upload report as artifact
         uses: actions/upload-artifact@v2
         with:
           name: benchmark-report
-          path: ${{ steps.benchmark_eval.outputs.report }}.*
+          path: ${{ steps.benchmark_eval.outputs.report }}
 ```
 
 ## Contributing

@@ -1,3 +1,3 @@
 paths:
-  report: report  # mandatory, reported as an output of the action
+  report: results/report/callset.plot.svg  # mandatory, reported as an output of the action
   prefix: ""

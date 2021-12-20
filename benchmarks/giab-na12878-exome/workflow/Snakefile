@@ -1,19 +1,11 @@
-include: "rules/common.smk"
-include: "rules/download.smk"
+config["variant-calls"] = {"callset": config["results"]}
 
 
-rule download:
-    input:
-        reads,
-        expand("test-regions.cov-{cov}.bed", cov=["low", "callable"]),
-        "truth.vcf",
-        "reference.fasta.fai",
+module giab_benchmark:
+    snakefile:
+        github("snakemake-workflows/giab-benchmark", path="workflow/Snakefile", tag="v1.0.0")
+    config:
+        config
 
 
-if "results" in config:
-
-    include: "rules/eval.smk"
-
-    rule eval:
-        input:
-            "report.tsv",
+use rule * from giab_benchmark

@@ -3,4 +3,12 @@ IFS=$'\n\t'
 
 source=`dirname "$0"`
 
-snakemake download --snakefile $source/workflow/Snakefile --directory $prefix --cores 1 --use-conda --show-failed-logs
+export SNAKEMAKE_OUTPUT_CACHE=$source/snakemake-cache
+mkdir -p $SNAKEMAKE_OUTPUT_CACHE
+
+snakemake download \
+    --snakefile $source/workflow/Snakefile \
+    --configfile $source/config/config.yaml \
+    --directory $prefix --cores 2 --use-conda \
+    --cache stratify_regions \
+    --show-failed-logs
