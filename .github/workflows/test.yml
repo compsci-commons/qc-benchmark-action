@@ -2,10 +2,9 @@ name: Test
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches-ignore: []
+    branches: [ main ]
 
 jobs:
   linting:
@@ -27,6 +26,7 @@ jobs:
           VALIDATE_SNAKEMAKE_LINT: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   testing-dummy:
     name: Testing dummy
     runs-on: ubuntu-latest
@@ -51,28 +51,45 @@ jobs:
           REPORT: ${{ steps.eval.outputs.report }}
         run: |
           cat "$REPORT"
-  testing-giab:
+
+  testing-giab-download:
     name: Testing giab-na12878-exome
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: Restore benchmark resources from cache
+        id: cache
+        uses: martijnhols/actions-cache/restore@v3
+        with:
+          path: benchmark-data/giab-na12878-exome/resources
+          key: giab-resources-${{ hashFiles('benchmarks/giab-na12878-exome/workflow/**') }}-${{ hashFiles('benchmarks/giab-na12878-exome/config/**') }}-${{ hashFiles('benchmarks/giab-na12878-exome/*.sh') }}
+
       - name: Download benchmark
         uses: ./
         id: download
         with:
           task: download
           benchmark_name: giab-na12878-exome
-      
+
+      - name: Save benchmark resources to cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: martijnhols/actions-cache/save@v3
+        with:
+          path: benchmark-data/giab-na12878-exome/resources
+          key: ${{ steps.cache.outputs.primary-key }}
+
+      - name: Commit and push snakemake cache to repo
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: benchmarks/giab-na12878-exome/snakemake-cache
+          push: true
+
       - name: Eval benchmark
         uses: ./
         id: eval
         with:
           task: eval
           benchmark_name: giab-na12878-exome
-          results_path: ${{ steps.download.outputs.data }}/truth.vcf
-      
-      - env:
-          REPORT: ${{ steps.eval.outputs.report }}
-        run: |
-          cat "$REPORT.summary.csv"
+          results_path: benchmark-data/giab-na12878-exome/resources/variants/truth.vcf

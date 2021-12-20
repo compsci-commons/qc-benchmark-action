@@ -1,0 +1,7 @@
+custom-reads:
+  activate: false
+
+limit-regions:
+  activate: false
+
+grch37: false
