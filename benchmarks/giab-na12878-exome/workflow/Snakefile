@@ -7,7 +7,7 @@ module giab_benchmark:
         github(
             "snakemake-workflows/benchmark-giab",
             path="workflow/Snakefile",
-            #tag="v1.0.0",
+            # tag="v1.0.0",
             commit="93a6e45d81bb35d72f7b98a5c8c6d124910e9f33",
         )
     config:
