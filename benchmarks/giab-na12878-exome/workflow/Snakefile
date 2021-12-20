@@ -1,11 +1,14 @@
-
 if "results" in config:
     config["variant-calls"] = {"callset": config["results"]}
 
 
 module giab_benchmark:
     snakefile:
-        github("snakemake-workflows/giab-benchmark", path="workflow/Snakefile", tag="v1.0.0")
+        github(
+            "snakemake-workflows/giab-benchmark",
+            path="workflow/Snakefile",
+            tag="v1.0.0",
+        )
     config:
         config
 
