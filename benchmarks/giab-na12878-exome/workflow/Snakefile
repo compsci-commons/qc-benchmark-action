@@ -1,4 +1,6 @@
-config["variant-calls"] = {"callset": config["results"]}
+
+if "results" in config:
+    config["variant-calls"] = {"callset": config["results"]}
 
 
 module giab_benchmark:
