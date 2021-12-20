@@ -1,5 +1,5 @@
 # QC benchmark action
-A generic github action for conducting scientific QC benchmarks.
+A generic GitHub action for conducting scientific QC benchmarks.
 
 
 ## Benchmarks
@@ -72,4 +72,4 @@ For inspiration, have a look at `benchmarks/giab-na12878-exome`.
 
 ### Joining the team
 
-Of course, we are keen on adding more benchmarks. If you like to become a maintainer of a particular benchmark, please add it via an initial PR from your fork at first. Then, we will ask you to join our team here, such that you receive write access to the repo for easier maintenance.
+Of course, we are keen on adding more benchmarks. If you like to become a maintainer of a particular benchmark, please add it via an initial PR from your fork at first. Then, we will ask you to join our team here, such that you receive write access to the repository for easier maintenance.
